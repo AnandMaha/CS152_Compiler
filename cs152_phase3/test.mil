@@ -1,0 +1,38 @@
+func main
+. i
+. __temp__0
+= __temp__0, 0
+= i, __temp__0
+: __label__2
+. __temp__1
+= __temp__1, i
+. __temp__2
+= __temp__2, 10
+. __temp__3
+<= __temp__3, __temp__1, __temp__2
+?:= __label__0, __temp__3
+:= __label__1
+: __label__0
+.> i
+. __temp__4
+= __temp__4, i
+. __temp__5
+= __temp__5, 2
+. __temp__6
+> __temp__6, __temp__4, __temp__5
+?:= __label__3, __temp__6
+:= __label__4
+: __label__3
+:= __label__1
+: __label__4
+. __temp__7
+= __temp__7, i
+. __temp__8
+= __temp__8, 1
+. __temp__9
++ __temp__9, __temp__7, __temp__8
+= i, __temp__9
+ := __label__2
+: __label__1
+endfunc
+
