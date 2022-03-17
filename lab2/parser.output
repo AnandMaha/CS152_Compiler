@@ -1,0 +1,335 @@
+State 24 conflicts: 2 shift/reduce
+State 25 conflicts: 2 shift/reduce
+
+
+Grammar
+
+    0 $accept: expr $end
+
+    1 expr: term eq
+
+    2 eq: EQ
+
+    3 term: term addop term
+    4     | term_2
+
+    5 addop: '+'
+    6      | '-'
+
+    7 term_2: term_2 multop term_2
+    8       | term_3
+
+    9 multop: '*'
+   10       | '/'
+
+   11 term_3: '-' '(' term ')'
+   12       | '(' term ')'
+   13       | INTEGER
+   14       | '-' INTEGER
+   15       | DECIMAL
+   16       | SCIENTIFICNUMBER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 11 12
+')' (41) 11 12
+'*' (42) 9
+'+' (43) 5
+'-' (45) 6 11 14
+'/' (47) 10
+error (256)
+INTEGER (258) 13 14
+EQ (259) 2
+DECIMAL (260) 15
+SCIENTIFICNUMBER (261) 16
+
+
+Nonterminals, with rules where they appear
+
+$accept (13)
+    on left: 0
+expr (14)
+    on left: 1, on right: 0
+eq (15)
+    on left: 2, on right: 1
+term (16)
+    on left: 3 4, on right: 1 3 11 12
+addop (17)
+    on left: 5 6, on right: 3
+term_2 (18)
+    on left: 7 8, on right: 4 7
+multop (19)
+    on left: 9 10, on right: 7
+term_3 (20)
+    on left: 11 12 13 14 15 16, on right: 8
+
+
+State 0
+
+    0 $accept: . expr $end
+
+    '-'               shift, and go to state 1
+    INTEGER           shift, and go to state 2
+    DECIMAL           shift, and go to state 3
+    SCIENTIFICNUMBER  shift, and go to state 4
+    '('               shift, and go to state 5
+
+    expr    go to state 6
+    term    go to state 7
+    term_2  go to state 8
+    term_3  go to state 9
+
+
+State 1
+
+   11 term_3: '-' . '(' term ')'
+   14       | '-' . INTEGER
+
+    INTEGER  shift, and go to state 10
+    '('      shift, and go to state 11
+
+
+State 2
+
+   13 term_3: INTEGER .
+
+    $default  reduce using rule 13 (term_3)
+
+
+State 3
+
+   15 term_3: DECIMAL .
+
+    $default  reduce using rule 15 (term_3)
+
+
+State 4
+
+   16 term_3: SCIENTIFICNUMBER .
+
+    $default  reduce using rule 16 (term_3)
+
+
+State 5
+
+   12 term_3: '(' . term ')'
+
+    '-'               shift, and go to state 1
+    INTEGER           shift, and go to state 2
+    DECIMAL           shift, and go to state 3
+    SCIENTIFICNUMBER  shift, and go to state 4
+    '('               shift, and go to state 5
+
+    term    go to state 12
+    term_2  go to state 8
+    term_3  go to state 9
+
+
+State 6
+
+    0 $accept: expr . $end
+
+    $end  shift, and go to state 13
+
+
+State 7
+
+    1 expr: term . eq
+    3 term: term . addop term
+
+    '+'  shift, and go to state 14
+    '-'  shift, and go to state 15
+    EQ   shift, and go to state 16
+
+    eq     go to state 17
+    addop  go to state 18
+
+
+State 8
+
+    4 term: term_2 .
+    7 term_2: term_2 . multop term_2
+
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+
+    $default  reduce using rule 4 (term)
+
+    multop  go to state 21
+
+
+State 9
+
+    8 term_2: term_3 .
+
+    $default  reduce using rule 8 (term_2)
+
+
+State 10
+
+   14 term_3: '-' INTEGER .
+
+    $default  reduce using rule 14 (term_3)
+
+
+State 11
+
+   11 term_3: '-' '(' . term ')'
+
+    '-'               shift, and go to state 1
+    INTEGER           shift, and go to state 2
+    DECIMAL           shift, and go to state 3
+    SCIENTIFICNUMBER  shift, and go to state 4
+    '('               shift, and go to state 5
+
+    term    go to state 22
+    term_2  go to state 8
+    term_3  go to state 9
+
+
+State 12
+
+    3 term: term . addop term
+   12 term_3: '(' term . ')'
+
+    '+'  shift, and go to state 14
+    '-'  shift, and go to state 15
+    ')'  shift, and go to state 23
+
+    addop  go to state 18
+
+
+State 13
+
+    0 $accept: expr $end .
+
+    $default  accept
+
+
+State 14
+
+    5 addop: '+' .
+
+    $default  reduce using rule 5 (addop)
+
+
+State 15
+
+    6 addop: '-' .
+
+    $default  reduce using rule 6 (addop)
+
+
+State 16
+
+    2 eq: EQ .
+
+    $default  reduce using rule 2 (eq)
+
+
+State 17
+
+    1 expr: term eq .
+
+    $default  reduce using rule 1 (expr)
+
+
+State 18
+
+    3 term: term addop . term
+
+    '-'               shift, and go to state 1
+    INTEGER           shift, and go to state 2
+    DECIMAL           shift, and go to state 3
+    SCIENTIFICNUMBER  shift, and go to state 4
+    '('               shift, and go to state 5
+
+    term    go to state 24
+    term_2  go to state 8
+    term_3  go to state 9
+
+
+State 19
+
+    9 multop: '*' .
+
+    $default  reduce using rule 9 (multop)
+
+
+State 20
+
+   10 multop: '/' .
+
+    $default  reduce using rule 10 (multop)
+
+
+State 21
+
+    7 term_2: term_2 multop . term_2
+
+    '-'               shift, and go to state 1
+    INTEGER           shift, and go to state 2
+    DECIMAL           shift, and go to state 3
+    SCIENTIFICNUMBER  shift, and go to state 4
+    '('               shift, and go to state 5
+
+    term_2  go to state 25
+    term_3  go to state 9
+
+
+State 22
+
+    3 term: term . addop term
+   11 term_3: '-' '(' term . ')'
+
+    '+'  shift, and go to state 14
+    '-'  shift, and go to state 15
+    ')'  shift, and go to state 26
+
+    addop  go to state 18
+
+
+State 23
+
+   12 term_3: '(' term ')' .
+
+    $default  reduce using rule 12 (term_3)
+
+
+State 24
+
+    3 term: term . addop term
+    3     | term addop term .
+
+    '+'  shift, and go to state 14
+    '-'  shift, and go to state 15
+
+    '+'       [reduce using rule 3 (term)]
+    '-'       [reduce using rule 3 (term)]
+    $default  reduce using rule 3 (term)
+
+    addop  go to state 18
+
+
+State 25
+
+    7 term_2: term_2 . multop term_2
+    7       | term_2 multop term_2 .
+
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+
+    '*'       [reduce using rule 7 (term_2)]
+    '/'       [reduce using rule 7 (term_2)]
+    $default  reduce using rule 7 (term_2)
+
+    multop  go to state 21
+
+
+State 26
+
+   11 term_3: '-' '(' term ')' .
+
+    $default  reduce using rule 11 (term_3)
