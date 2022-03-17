@@ -1,0 +1,64 @@
+1 Program -> Functions
+
+2 Functions -> Function Functions
+3          | epsilon
+
+4 Function -> FUNCTION IDENTIFIER SEMICOLON BEGIN_PARAMS Declarations END_PARAMS BEGIN_LOCALS Declarations END_LOCALS BEGIN_BODY Statements END_BODY
+
+5 Declarations -> Declaration SEMICOLON Declarations
+6             | epsilon
+
+7 Declaration -> IDENTIFIER COLON Array INTEGER
+
+8 Array -> ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF
+9      | epsilon
+
+10 Statements -> Statement SEMICOLON Statements
+11           | epsilon
+
+12 Statement -> Var ASSIGN Expression
+13          | IF Bool-Exp THEN Statements ENDIF
+14          | IF Bool-Exp THEN Statements ELSE Statements ENDIF
+15          | WHILE Bool-Exp BEGINLOOP Statements ENDLOOP
+16          | DO BEGINLOOP Statements ENDLOOP WHILE Bool-Exp
+17          | READ Var
+18          | WRITE Var
+19          | CONTINUE
+20          | BREAK
+21          | RETURN Expression
+
+22 Var -> IDENTIFIER
+23    | IDENTIFIER L_SQUARE_BRACKET Expression R_PAREN
+
+24 Expression -> Multiplicative_Expr Addop_Expr
+
+25 Multiplicative_Expr -> Term Multop_Term
+
+26 Term -> Var
+27     | NUMBER
+28     | L_PAREN Expression R_PAREN
+29     | IDENTIFIER L_PAREN Expression Comma_Expr R_PAREN
+
+30 Comma_Expr -> COMMA Expression
+31           | epsilon
+
+32 Multop_Term -> MULT Term
+33            | DIV Term
+34            | MOD Term
+35            | epsilon
+
+36 Addop_Expr -> ADD Multiplicative_Expr Addop_Expr
+37           | SUB Multiplicative_Expr Addop_Expr
+38           | epsilon
+
+39 Bool-Exp -> Nots Expression Comp Expression
+
+40 Nots -> NOT Nots
+41     | epsilon
+
+42 Comp -> EQ
+43     | NEQ
+44     | LT
+45     | GT
+46     | LTE
+47     | GTE
